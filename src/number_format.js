@@ -418,7 +418,7 @@ class NumberFormat extends React.Component {
       This will be also in case if user has started typing, in any other case it will not be -1
       unless wrong prop value is provided */
       if (index === -1) {
-        numStr = val;
+        numStr += val.substring(start);
         break;
       } else {
         numStr += val.substring(start, index);
@@ -645,8 +645,9 @@ class NumberFormat extends React.Component {
     }
 
     //if format got deleted reset the value to last value
-    if (this.checkIfFormatGotDeleted(start, end, lastValue)) {
-      value = lastValue;
+    if (this.checkIfFormatGotDeleted(start, end, lastValue) && format) {
+      const numericString = this.removeFormatting(value);
+      value = this.formatWithPattern(numericString);
     }
 
     //for numbers check if beforeDecimal got deleted and there is nothing after decimal,
